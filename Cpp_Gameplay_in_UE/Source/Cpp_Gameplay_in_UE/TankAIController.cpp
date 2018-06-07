@@ -14,16 +14,19 @@ void ATankAIController::BeginPlay()
 	}
 }
 
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if (GetPlayerTank())
+	{
+		ATank* AITank = Cast<ATank>(GetPawn());
+		AITank->AimAt(GetPlayerTank()->GetTargetLocation());
+	}
+}
+
 ATank* ATankAIController::GetPlayerTank() const
 {
 	APawn* PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
-	if (PlayerTank)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("The AI found our tank: %s"), *PlayerTank->GetName());
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("The AI couldn't detect any player controlled tanks."));
-	}
 	return Cast<ATank>(PlayerTank);
 }

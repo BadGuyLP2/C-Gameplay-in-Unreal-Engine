@@ -16,7 +16,9 @@ class CPP_GAMEPLAY_IN_UE_API ATankAIController : public AAIController
 	GENERATED_BODY()
 	
 public:
-	void BeginPlay() override;
+	virtual void BeginPlay() override;
+
+	virtual void Tick(float DeltaTime) override;
 	
 	ATank* GetPlayerTank() const;
 	
