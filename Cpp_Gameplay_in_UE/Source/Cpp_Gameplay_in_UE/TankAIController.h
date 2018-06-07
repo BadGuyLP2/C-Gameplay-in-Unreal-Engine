@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Tank.h"
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
@@ -17,5 +18,6 @@ class CPP_GAMEPLAY_IN_UE_API ATankAIController : public AAIController
 public:
 	void BeginPlay() override;
 	
+	ATank* GetPlayerTank() const;
 	
 };

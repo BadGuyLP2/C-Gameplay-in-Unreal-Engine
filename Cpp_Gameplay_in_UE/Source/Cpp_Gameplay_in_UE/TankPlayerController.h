@@ -15,9 +15,23 @@ class CPP_GAMEPLAY_IN_UE_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
+private:
+	UPROPERTY(EditAnywhere)
+	float CrosshairXLocation = 0.5;
+
+	UPROPERTY(EditAnywhere)
+	float CrosshairYLocation = 0.5;
+
+	void AimTowardsCrosshair();
+
+	bool GetSightRayHitLocation(FVector &OutHitLocation) const;
+
+	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
+
 public:
 	ATank* GetControlledTank() const;
 	
-	void BeginPlay() override;
-	
+	virtual void BeginPlay() override;
+
+	virtual void Tick(float DeltaTime) override;
 };
