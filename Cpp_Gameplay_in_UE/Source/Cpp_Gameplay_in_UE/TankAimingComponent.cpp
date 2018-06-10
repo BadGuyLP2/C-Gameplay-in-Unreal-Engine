@@ -2,12 +2,17 @@
 
 #include "TankAimingComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "TankBarrel.h"
 #include "Kismet/GameplayStatics.h"
 
 
 void UTankAimingComponent::MoveBarrel(FVector AimDirection)
 {
-	
+	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
+	auto AimAsRotator = AimDirection.Rotation();
+	auto DeltaRotator = AimAsRotator - BarrelRotator;
+
+	Barrel->Elevate(5);
 }
 
 // Sets default values for this component's properties
@@ -49,12 +54,12 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 	if (UGameplayStatics::SuggestProjectileVelocity(this, OutLaunchVelocity, StartLocation, WorldSpaceAim, LaunchSpeed, ESuggestProjVelocityTraceOption::DoNotTrace))
 	{
 	FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
-	MoveBarrel();
+	MoveBarrel(AimDirection);
 	}
 
 }
 
-void UTankAimingComponent::SetBarrelRefernece(UStaticMeshComponent * BarrelToSet)
+void UTankAimingComponent::SetBarrelRefernece(UTankBarrel * BarrelToSet)
 {
 	Barrel = BarrelToSet;
 }
