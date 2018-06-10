@@ -47,11 +47,15 @@ public:
 	void SetTurretReference(UTankTurret * TurretToSet);
 
 	UPROPERTY(EditAnywhere, Category = "Firing")
-	float LaunchSpeed = 100000;
+	float LaunchSpeed = 15000;
 
 	UPROPERTY(EditAnywhere, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 private:
 	UTankBarrel* Barrel = nullptr;
+
+	float Reload = 3.f;
+
+	double LastFireTime = 0;
 };
