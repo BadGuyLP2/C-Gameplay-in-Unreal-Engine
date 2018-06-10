@@ -16,7 +16,7 @@ class CPP_GAMEPLAY_IN_UE_API UTankBarrel : public UStaticMeshComponent
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Setup")
-	float MaxDegreesPerSecond = 20;
+	float MaxDegreesPerSecond = 50;
 
 	UPROPERTY(EditAnywhere, Category = "Setup")
 	float MaxElevationDegrees = 40;
@@ -25,7 +25,7 @@ private:
 	float MinElevationDegrees = 0;
 	
 public:
-	void Elevate(float DefreesPerSecond);
+	void Elevate(float RelativeSpeed);
 	
 	
 };
