@@ -14,6 +14,10 @@ UCLASS()
 class CPP_GAMEPLAY_IN_UE_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
+
+private:
+	UPROPERTY(EditAnywhere)
+	float AcceptanceRadius = 5000;
 	
 public:
 	virtual void BeginPlay() override;

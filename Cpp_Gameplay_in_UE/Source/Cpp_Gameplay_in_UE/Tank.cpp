@@ -4,6 +4,7 @@
 #include "UObject/UObjectGlobals.h"
 #include "Engine/World.h"
 #include "TankBarrel.h"
+#include "TankMovementComponent.h"
 #include "Projectile.h"
 
 
@@ -49,7 +50,7 @@ void ATank::Fire()
 {
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > Reload;
 		if (Barrel && isReloaded && ProjectileBlueprint)
-		{
+		{	
 			auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
 			Projectile->LaunchProjectile(LaunchSpeed);
 			LastFireTime = FPlatformTime::Seconds();
