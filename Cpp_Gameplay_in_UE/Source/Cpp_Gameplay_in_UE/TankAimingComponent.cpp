@@ -4,7 +4,6 @@
 #include "TankBarrel.h"
 #include "TankTurret.h"
 #include "Projectile.h"
-#include "Components/StaticMeshComponent.h"
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -17,12 +16,18 @@ void UTankAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	LastFireTime = FPlatformTime::Seconds();
+	LastFireTime = GetWorld()->GetTimeSeconds();
 }
 
 void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
-{
-	if ((FPlatformTime::Seconds() - LastFireTime) < Reload)
+{	
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	
+	if (!RoundsLeft)
+	{
+		FiringState = EFiringState::OutOfAmmo;
+	}
+	else if ((GetWorld()->GetRealTimeSeconds() - LastFireTime) < Reload)
 	{
 		FiringState = EFiringState::Reloading;
 	}
@@ -42,6 +47,16 @@ bool UTankAimingComponent::IsBarrelMoving()
 
 	FVector BarrelForward = Barrel->GetForwardVector();
 	return !(BarrelForward.Equals(AimDirection, 0.01f));
+}
+
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+	return FiringState;
+}
+
+int32 UTankAimingComponent::GetRoundsLeft() const
+{
+	return RoundsLeft;
 }
 
 void UTankAimingComponent::MoveBarrel(FVector AimDirection)
@@ -76,11 +91,12 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 
 void UTankAimingComponent::Fire()
 {	
-	//(FiringState != EFiringState::Reloading) &&
-	if (Barrel && ProjectileBlueprint)
+	if (Barrel && (FiringState != EFiringState::Reloading) && ProjectileBlueprint && RoundsLeft > 0)
 	{
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
 		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFireTime = GetWorld()->GetRealTimeSeconds();
+		RoundsLeft--;
 	}
 }
 

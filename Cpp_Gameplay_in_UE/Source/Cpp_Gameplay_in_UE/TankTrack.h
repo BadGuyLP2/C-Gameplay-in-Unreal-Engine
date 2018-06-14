@@ -13,12 +13,21 @@ class CPP_GAMEPLAY_IN_UE_API UTankTrack : public UStaticMeshComponent
 	
 private:
 	UTankTrack();
+	virtual void BeginPlay() override;
 
+	float CurrentThrottle = 0;
+
+	void ApplySidewaysForce();
+	void DriveTrack();
+
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 
 public:
 	UPROPERTY(EditDefaultsOnly)
-	float TrackMaxDrivingForce = 400000.f;
+	float TrackMaxDrivingForce = 5000000.f;
 
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void SetThrottle(float Throttle);
+
 };

@@ -15,7 +15,8 @@ enum class EFiringState : uint8
 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	OutOfAmmo
 };
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -28,6 +29,7 @@ private:
 	virtual void BeginPlay() override;
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	int32 RoundsLeft = 15;
 	float Reload = 3.f;
 	double LastFireTime = 0;
 
@@ -42,18 +44,25 @@ private:
 
 
 protected:
+
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
 
 
 public:
+	EFiringState GetFiringState() const;
+
 	void AimAt(FVector HitLocation);
+
 
 	UPROPERTY(EditAnywhere, Category = "Firing")
 	float LaunchSpeed = 15000;
 
 	UPROPERTY(EditAnywhere, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
+
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	int32 GetRoundsLeft() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
