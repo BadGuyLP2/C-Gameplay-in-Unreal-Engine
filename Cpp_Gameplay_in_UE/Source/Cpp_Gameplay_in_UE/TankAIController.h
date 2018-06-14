@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Tank.h"
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
@@ -16,16 +15,9 @@ class CPP_GAMEPLAY_IN_UE_API ATankAIController : public AAIController
 	GENERATED_BODY()
 
 private:
+	ATankAIController();
+	virtual void Tick(float DeltaTime) override;
+
 	UPROPERTY(EditAnywhere)
 	float AcceptanceRadius = 5000;
-	
-public:
-	virtual void BeginPlay() override;
-
-	virtual void Tick(float DeltaTime) override;
-	
-	ATank* GetPlayerTank() const;
-
-	ATank* GetControlledTank() const;
-	
 };

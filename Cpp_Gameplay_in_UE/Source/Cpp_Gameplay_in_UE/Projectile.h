@@ -12,22 +12,12 @@ class CPP_GAMEPLAY_IN_UE_API AProjectile : public AActor
 {
 	GENERATED_BODY()
 	
-public:	
-	// Sets default values for this actor's properties
+private:
 	AProjectile();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-private:
 	UProjectileMovementComponent * ProjectileMovement = nullptr;
+
 
 public:
 	void LaunchProjectile(float Speed);
-	
 };

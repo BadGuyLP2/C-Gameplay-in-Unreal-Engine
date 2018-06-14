@@ -3,15 +3,10 @@
 #include "TankTurret.h"
 #include "Engine/World.h"
 
-/*
-void UTankTurret::Rotate(float RelativeSpeed)
+UTankTurret::UTankTurret()
 {
-	RelativeSpeed = FMath::Clamp<float>(RelativeSpeed, -1, +1);
-	auto RotationChange = RelativeSpeed * MaxDegreesPerSecond;
-	auto Rotation = RelativeRotation.Yaw + RotationChange;
-	SetRelativeRotation(FRotator(0, Rotation, 0));
+	PrimaryComponentTick.bCanEverTick = false;
 }
-*/
 
 void UTankTurret::Rotate(float RelativeSpeed)
 {
