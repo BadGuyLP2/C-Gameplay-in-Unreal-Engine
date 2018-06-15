@@ -18,6 +18,8 @@ private:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
+	virtual void SetPawn(APawn* InPawn) override;
+
 	bool GetSightRayHitLocation(FVector &OutHitLocation) const;
 	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
@@ -32,6 +34,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float LineTraceRange = 1000000;
+
+	UFUNCTION()
+	void OnPossessedTankDeath();
 
 
 protected:

@@ -6,9 +6,6 @@
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class CPP_GAMEPLAY_IN_UE_API ATankAIController : public AAIController
 {
@@ -18,6 +15,11 @@ private:
 	ATankAIController();
 	virtual void Tick(float DeltaTime) override;
 
+	virtual void SetPawn(APawn* InPawn) override;
+
 	UPROPERTY(EditAnywhere)
 	float AcceptanceRadius = 8000;
+
+	UFUNCTION()
+	void OnPossessedTankDeath();
 };

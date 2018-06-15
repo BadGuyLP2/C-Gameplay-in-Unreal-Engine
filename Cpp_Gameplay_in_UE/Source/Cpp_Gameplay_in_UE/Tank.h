@@ -6,7 +6,7 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
-//class AActor;
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
 
 UCLASS()
 class CPP_GAMEPLAY_IN_UE_API ATank : public APawn
@@ -24,6 +24,8 @@ private:
 
 
 public:
+	FTankDelegate OnDeath;
+
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser) override;
 
 	UFUNCTION(BlueprintPure, Category = "Health")
