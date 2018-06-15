@@ -6,6 +6,8 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
+//class AActor;
+
 UCLASS()
 class CPP_GAMEPLAY_IN_UE_API ATank : public APawn
 {
@@ -13,4 +15,17 @@ class CPP_GAMEPLAY_IN_UE_API ATank : public APawn
 
 private:
 	ATank();
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	int32 StartingHealth = 100;
+
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
+	int32 CurrentHealth = 100;
+
+
+public:
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser) override;
+
+	UFUNCTION(BlueprintPure, Category = "Health")
+	float GetHealth() const;
 };
